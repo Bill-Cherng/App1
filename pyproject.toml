@@ -1,0 +1,5 @@
+[project]
+name = "food-calorie-estimator"
+version = "0.1.0"
+requires-python = ">=3.12"
+description = "Gradio app for food calorie estimation using Google Gemini"
