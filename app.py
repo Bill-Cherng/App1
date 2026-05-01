@@ -1,6 +1,7 @@
 import os
 import gradio as gr
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,9 +31,11 @@ def analyze_food(api_key: str, image) -> str:
         return "請上傳一張圖片"
 
     try:
-        genai.configure(api_key=api_key.strip())
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        response = model.generate_content([PROMPT, image])
+        client = genai.Client(api_key=api_key.strip())
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=[image, PROMPT],
+        )
         result_text = response.text.strip()
 
         if result_text.startswith("NOT_FOOD"):
